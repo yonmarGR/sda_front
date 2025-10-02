@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import SmallSpinner from "@/ui_components/SmallSpinner";
 import InputError from "@/ui_components/InputError";
 import SmallSpinnerText from "@/ui_components/SmallSpinnerText";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const LoginPage = ({setIsAuthenticated, setUsername}) => {
   const { register, handleSubmit, formState } = useForm();
