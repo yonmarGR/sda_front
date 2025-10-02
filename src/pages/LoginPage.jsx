@@ -15,12 +15,16 @@ const LoginPage = ({setIsAuthenticated, setUsername}) => {
   const { errors } = formState;
   const location = useLocation()
   const navigate = useNavigate()
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false)
 
+   // Only check auth once on component mount
   useEffect(() => {
-    if (localStorage.getItem("access")) {
-      navigate("/app");
+    const token = localStorage.getItem("access");
+    if (token) {
+      navigate("/app", { replace: true });
     }
-  }, [navigate]);
+    setHasCheckedAuth(true);
+  }, []);
 
   const mutation = useMutation({
     mutationFn: (data) => signin(data),
@@ -42,6 +46,11 @@ const LoginPage = ({setIsAuthenticated, setUsername}) => {
   function onSubmit(data) {
     console.log(data);
     mutation.mutate(data);
+  }
+
+   // Don't render until auth check is complete
+  if (!hasCheckedAuth) {
+    return <div>Loading...</div>;
   }
 
   return (
